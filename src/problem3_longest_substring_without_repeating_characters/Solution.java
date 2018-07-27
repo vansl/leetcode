@@ -15,20 +15,27 @@ class Solution {
         while (index<s.length()){
             char c = s.charAt(index++);
             if(exist.containsKey(c)){
-                currentLength = index-exist.get(c);
-                System.out.println(c+" "+currentLength);
+                int preIndex = exist.get(c);
+                currentLength = index-preIndex-1;
                 exist = new HashMap<>(128);
+                for (int i=preIndex;i<index;i++){
+                    exist.put(s.charAt(i),i);
+                }
+                exist.replace(c,index-1);
+            }else{
+                exist.put(c,index-1);
+                currentLength++;
             }
-            exist.put(c,index);
-            currentLength++;
             if (currentLength>maxLength){
                 maxLength = currentLength;
             }
         }
         return maxLength;
     }
-
     public static void main(String[] args) {
-        System.out.println(new Solution().lengthOfLongestSubstring("dvdf"));
+        System.out.println(new Solution().lengthOfLongestSubstring("pwwkew"));
+        System.out.println(new Solution().lengthOfLongestSubstring("bbbb"));
+        System.out.println(new Solution().lengthOfLongestSubstring("abcdaef"));
+        System.out.println(new Solution().lengthOfLongestSubstring(""));
     }
 }
